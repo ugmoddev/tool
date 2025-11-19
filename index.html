@@ -1,0 +1,371 @@
+<html lang="vi"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Tool</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 0; 
+        overflow-x: hidden; 
+        overflow-y: auto;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #e0e0e0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        position: relative;
+    }
+
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.08) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    header {
+        width: 100%; 
+        background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+        color: #1a1a2e;
+        text-align: center;
+        padding: 25px 0;
+        font-size: 2.8rem;
+        font-weight: 800;
+        box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #1a1a2e, transparent);
+    }
+
+    .scale-select {
+        margin: 25px;
+        padding: 12px 20px;
+        border-radius: 10px;
+        border: 2px solid #FFD700;
+        background: rgba(26, 26, 46, 0.8);
+        color: #FFD700;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+    }
+
+    .scale-select:hover {
+        background: rgba(26, 26, 46, 1);
+        box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        transform: translateY(-2px);
+    }
+    
+    .main-container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 95%;
+        max-width: 1400px;
+        gap: 25px;
+        margin: 30px 0 50px 0;
+        padding: 0 20px;
+        justify-content: center;
+    }
+    
+    .container {
+        padding: 25px;
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        flex: 1;
+        min-width: 300px;
+        max-width: 400px;
+        background: rgba(26, 26, 46, 0.7);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        border-color: rgba(255, 215, 0, 0.4);
+    }
+
+    .container-title {
+        text-align: center;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #FFD700;
+        margin-bottom: 8px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .container-subtitle {
+        text-align: center;
+        font-size: 0.9rem;
+        color: #b0b0b0;
+        margin-bottom: 15px;
+        font-style: italic;
+    }
+
+    .btn {
+        background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+        color: #1a1a2e;
+        padding: 14px 18px;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+        background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%);
+    }
+
+    .btn:hover::before {
+        left: 100%;
+    }
+
+    .btn:active {
+        transform: translateY(-1px) scale(1.01);
+    }
+
+    /* Thông báo */
+    .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #002fff, #FFA500);
+        color: #1a1a2e;
+        padding: 15px 25px;
+        border-radius: 10px;
+        font-weight: 600;
+        box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+        transform: translateX(150%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+    }
+
+    .notification.show {
+        transform: translateX(0);
+    }
+
+    /* Responsive design */
+    @media (max-width: 1200px) {
+        .main-container {
+            max-width: 1000px;
+        }
+        
+        .container {
+            min-width: 280px;
+            max-width: 350px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-container {
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .container {
+            min-width: 100%;
+            max-width: 100%;
+        }
+        
+        header {
+            font-size: 2.2rem;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            padding: 14px 18px;
+            font-size: 1.1rem;
+        }
+        
+        .notification {
+            top: 10px;
+            right: 10px;
+            left: 10px;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        header {
+            font-size: 1.8rem;
+        }
+        
+        .scale-select {
+            margin: 15px;
+            padding: 10px 15px;
+            font-size: 1rem;
+        }
+        
+        .container {
+            padding: 15px;
+        }
+        
+        .container-title {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+</head>
+<body style="opacity: 1; transition: opacity 0.5s;">
+    <header>Hoi Tool</header>
+
+
+    <select class="scale-select" id="scaleSelect">
+        <option value="0.7">Nhỏ</option>
+        <option value="0.8" selected="">Vừa</option>
+        <option value="1">To</option>
+    </select>
+
+    <div class="main-container">
+        <!-- Công cụ chính -->
+        <div class="container">
+            <div class="container-title">Công Cụ Chính</div>
+            <div class="container-subtitle">Tiện ích hệ thống</div>
+            <button class="btn" data-link="https://www.turbolite.asia/2025/04/hack.html">Client Hack</button>
+            <button class="btn" data-link="https://bom.so/taskbar">TaskBar</button>
+            <button class="btn" data-link="https://www.mediafire.com/file/sae9iopdjzy3s8j/ZArchiver_1.0.10_APKPure.apk/file">ZArchiver</button>
+        </div>
+        
+        <!-- Fix lỗi phần 1 -->
+        <div class="container">
+            <div class="container-title">Fix Lỗi Ứng Dụng</div>
+            <div class="container-subtitle">Phần 1</div>
+            <button class="btn" data-link="https://now.gg/apps/Blox-fruit/19901/Blox-fruit.html">Fix không tải được app #1</button>
+            <button class="btn" data-link="https://educationbluesky.com/apps/a/19900/b.html">Fix không tải được app #2</button>
+            <button class="btn" data-link="https://educationbluesky.com/apps/a/19900/b.html">Fix không tải được app #3</button>
+            <button class="btn" data-link="https://thetrignometry.com/">Fix không tải được app #4</button>
+            <button class="btn" data-link="https://mathsstudio.com/">Fix không tải được app #5</button>
+        </div>
+        
+        <!-- Fix lỗi phần 2 -->
+        <div class="container">
+            <div class="container-title">Fix Lỗi Ứng Dụng</div>
+            <div class="container-subtitle">Phần 2</div>
+            <button class="btn" data-link="https://geometrying.com/">Fix không tải được app #6</button>
+            <button class="btn" data-link="https://scienceproperties.com/">Fix không tải được app #7</button>
+            <button class="btn" data-link="https://mathstutor.life/">Fix không tải được app #8</button>
+            <button class="btn" data-link="https://maths.media/">Fix không tải được app #9</button>
+            <button class="btn" data-link="https://mathstutors.co/">Fix không tải được app #10</button>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Hàm này mở liên kết trong một tab mới của trình duyệt
+         * và giữ nguyên trang tool hiện tại
+         */
+        function openLinkInNewTab(link) {
+            // Hiển thị thông báo
+            const notification = document.getElementById('notification');
+            notification.textContent = 'Đang mở liên kết...';
+            notification.classList.add('show');
+            
+            // Mở tab mới
+            const newTab = window.open(link, '_blank');
+            
+            // Ẩn thông báo sau 2 giây
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+            
+            // Focus lại trang tool hiện tại (tuỳ chọn)
+            setTimeout(() => {
+                window.focus();
+            }, 100);
+        }
+
+        /**
+         * Hàm xử lý sự kiện click cho tất cả các nút
+         */
+        function handleButtonClick(event) {
+            const button = event.currentTarget;
+            const link = button.getAttribute('data-link');
+            
+            if (link) {
+                openLinkInNewTab(link);
+            }
+        }
+
+        // Thêm sự kiện click cho tất cả các nút
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.btn[data-link]');
+            buttons.forEach(button => {
+                button.addEventListener('click', handleButtonClick);
+            });
+        });
+
+        // Đoạn code xử lý việc thay đổi kích thước giao diện
+        const scaleSelect = document.getElementById('scaleSelect');
+        if (scaleSelect) {
+            scaleSelect.addEventListener('change', (e) => {
+                document.body.style.transform = `scale(${e.target.value})`;
+                document.body.style.transformOrigin = 'top center';
+            });
+        }
+
+        // Thêm hiệu ứng khi trang load
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+
+</body></html>
